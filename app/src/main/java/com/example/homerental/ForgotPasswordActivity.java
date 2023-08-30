@@ -10,28 +10,24 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.homerental.firebase.FirebaseHandler;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.FirebaseDatabase;
-import com.example.homerental.firebase.FirebaseHandler;
-import com.example.homerental.model.User;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class ForgotPasswordActivity extends AppCompatActivity {
 
     private EditText etEmail;
-
-    private FirebaseHandler mAuth;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_forgot_password); // Use the correct layout
 
-        mAuth = FirebaseHandler.get();
+        mAuth = FirebaseAuth.getInstance();
 
-        etEmail = findViewById(R.id.etUsername);
-        Button resetPassword = findViewById(R.id.ResetPassword);
+        etEmail = findViewById(R.id.etEmail); // Correct ID for the EditText
+        Button resetPassword = findViewById(R.id.btnResetPassword); // Correct ID for the Button
 
         resetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,7 +42,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                 }
 
                 // Send a password reset email
-                mAuth.getFirebaseConnection(etEmail)
+                mAuth.sendPasswordResetEmail(email)
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
@@ -58,10 +54,9 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                                     // Failed to send password reset email
                                     Toast.makeText(ForgotPasswordActivity.this, "Failed to send email", Toast.LENGTH_SHORT).show();
                                 }
-                            }
-                        });
+                     }
+                });
             }
         });
     }
 }
-
