@@ -54,8 +54,8 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                                     // Failed to send password reset email
                                     Toast.makeText(ForgotPasswordActivity.this, "Failed to send email", Toast.LENGTH_SHORT).show();
                                 }
-                            }
-                        });
+                     }
+                });
             }
         });
     }
